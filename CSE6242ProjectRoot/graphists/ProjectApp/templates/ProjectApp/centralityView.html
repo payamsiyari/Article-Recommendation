@@ -1,0 +1,69 @@
+<head>
+<meta charset="UTF-8">
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static "centralityViewStyle.css" %}">
+
+<script id="centralityViewScriptMain">
+//$( document ).ready(function() {
+	centralNodes = new Array();
+	{% for n in centralNodes %}
+		centralNodes["{{n.0}}"]={% templatetag openbrace %}"centrality": "{{n.1}}", "rank": "{{forloop.counter}}" {% templatetag closebrace %}
+	{% endfor %}
+
+	for(var mm in graph.nodes){
+		if(graph.nodes[mm].id in centralNodes)
+			document.getElementById(graph.nodes[mm].id+"_bibcentral").innerHTML =
+				'<b>&nbsp;&nbsp;' + centralNodes[graph.nodes[mm].id].rank + '.&nbsp;</b>' + '<b>"' + graph.nodes[mm].title + '"</b>, ' + graph.nodes[mm].authors + ', <i>' + graph.nodes[mm].journal + '</i>, ' + graph.nodes[mm].year + ' <a href="' + graph.nodes[mm].linkurl + '" target="_blank">URL</a></div>'
+	}
+//	alert(ss.length + '====' + ss)
+//	alert(ssss)
+	d3.selectAll("li.checkboxItemCentral")
+			.on("mouseover", function(d) {
+				$(this).css('background', '#a6d0ef');
+				var nodeID = this.getAttribute("id").split("_")[0]
+				var foundNode = null
+				var found = false
+				$.each(graph.nodes, function(i, v) {
+					if (v.id == nodeID) {
+						found = true
+						foundNode = v
+						return;
+					}
+				});
+				if(found){
+					highlight_node_function(foundNode)
+				}else{
+				}
+			})
+			.on("mouseout", function(d) {
+				$(this).css('background', this.getAttribute("color"));
+				exit_highlight_handle();
+			})
+	text.text(function(d) {
+		if(d.id in centralNodes){
+			return centralNodes[d.id].rank;
+		}else{
+			return ""
+		}
+	}).style("visibility", function(d) {
+		if (d.id in centralNodes) {
+			return "visible"
+		}else{
+			return "hidden"
+		}
+	})
+//});
+</script>
+</head>
+<body>
+<ul class="checklist cl1" id="seedList" style="overflow:auto;">
+	{% for n in centralNodes %}
+	<li
+			class = "checkboxItemCentral"
+			id ="{{n.0}}_rowcentral" color="#ffffff">
+		<div id="{{n.0}}_bibcentral" style="display: inline;"></div>
+		<hr>
+	</li>
+	{% endfor %}
+</ul>
+</body>

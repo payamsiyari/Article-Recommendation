@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title>Graphists - Main</title>
+	<script>
+		var graph = false; var default_node_color = "#ccc"; var text = false;
+		var zoom = false; var g = false;
+		var w = 0; var h = 0;
+		var highlight_node_function = (function (d){
+		});
+		var exit_highlight_handle = (function (d){
+		});
+	</script>
+	{% load staticfiles %}
+	<script src="{% static "jquery.min.js" %}"></script>
+	<script src="{% static "jquery-ui.js" %}"></script>
+	<script src="{% static "d3.v3.min.js" %}"></script>
+	<script src="{% static "d3.tip.v0.6.3.js" %}"></script>
+	<script src="{% static "javascriptCodes.js" %}"></script>
+	<script src="{% static "poster.js" %}"></script>
+	<link rel="stylesheet" href="{% static "jquery-ui.css" %}">
+	<link rel="stylesheet" href="{% static "style.css" %}">
+
+	{% csrf_token %}
+</head>
+	<!--Global variables and functions-->
+
+<body>
+<div id="wrapper">
+	<div id="interface">
+		<div id="interface_input">
+					<b>Search:</b>
+			<input id="query" type=text>
+			<!--<a href="buttonClicked"><button id="submitButton">Submit</button></a>-->
+			<button id="submitButton">Submit</button>
+			<a href="/"><button id="submitButton2">Clear</button></a>
+			<div id="loading">Loading...</div>
+			<!--<button id="submitButton2">DeSubmit</button>-->
+		</div>
+		<div style="display: inline-block;padding: 10px;"><b>Graph Exploration Parameters:</b></div>
+		<div id="interface_params" style="float:center;">
+			<div id = "year_param" style="display: inline-block;text-align: center;">
+				<label for="year_span"><b>- Year Span:</b></label>
+					<input type="text" id="year_span" readonly style="border:0; color:#f6931f; font-weight:bold;">
+				<div id="slider_range"></div>
+			</div>
+					<p></p>
+			<div id = "max_nodes" style="display: inline-block;">
+				<label for="max_nodes"><b>- Maximum Number of Nodes:</b></label>
+					<input type="number" id="nodes_max_number" value="200" style="height: 20px; width: 40px">
+			</div>
+			<div id = "max_param" style="display: inline-block;">
+				<label for="max_param"><b>- Maximum Hops From Nodes:</b></label>
+					<input type="number" id="hop_max_number" value="2" style="height: 20px; width: 35px">
+			</div>
+			<div id = "centrality_param" style="display: inline-block;">
+				<label for="cents"><b>- Centrality Algorithm Parameter:</b></label>
+				<div style="padding:0px;">
+					<form id = "cents" action="">
+					<input type="radio" name="cent" value="pc" checked="checked"> Sorted-Path-Centrality
+					<input type="radio" name="cent" value="pcg"> Greedy-Path-Centrality
+					<input type="radio" name="cent" value="bw"> Betwennness
+					<input type="radio" name="cent" value="dg"> Degree
+						<br>
+					<input type="radio" name="cent" value="pr"> Page-Rank
+					<input type="radio" name="cent" value="kz"> Katz
+					</form>
+				</div>
+			</div>
+		</div>
+		<div style="display: inline-block;padding: 10px;"><b>Seed Selection:</b></div><button id="refineButton">Return Central Nodes</button>
+		<div id="interface_search">
+		</div>
+	</div>
+	<div id="output">
+			<b>Graph Viewer:</b>
+	<!--<button id="zoomOutButton">Zoom Out</button><button id="zoomInButton">Zoom In</button>-->
+			<div style="display: inline-block; float: right;">
+				<input type="checkbox" id ="showTips" checked="checked"> <div style="display: inline;">Enable Tooltips&nbsp;&nbsp;&nbsp;</div>
+				<input type="checkbox" id ="showInitialDegree"> <div style="display: inline;">Weighted Node Size&nbsp;&nbsp;&nbsp;</div>
+			</div>
+		<div id="output_graph"></div>
+		<div style="display: inline-block;padding: 10px;"><b>Algorithm Outputs:</b><button id="clearCentralsButton">Clear Central Nodes</button></div><div style="display: inline;">Output Size Limit:&nbsp;&nbsp;&nbsp;</div><input type="number" id="centMaxLimit" value="20" style="height: 20px; width: 40px">
+		<div id="output_algorithms">
+		</div>
+	</div>
+	<div id="citationBrowser">
+		&nbsp;<b>Citation Browser:</b>
+	<button id="clearBrowserButton">Clear Browser</button>
+	<br>
+	&nbsp;&nbsp;&nbsp;Selected Paper:
+		<div id="selectedPaper"></div>
+		<div style="display: inline-block;padding: 10px;">&nbsp;&nbsp;&nbsp;Citations:</div>
+			<div id="citations">
+			</div>
+	</div>
+</div>
+</body>
+
+</html>
+		
+		

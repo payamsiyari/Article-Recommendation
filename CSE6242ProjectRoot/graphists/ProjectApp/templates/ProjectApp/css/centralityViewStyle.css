@@ -1,0 +1,19 @@
+/* Undo some styles from the master stylesheet */
+.checklist2 li { background: none; padding-left: 0; line-height: 200%;}
+
+/* CSS for checklists */
+.checklist2 {
+  border: 1px solid #ccc;
+  list-style: none;
+  height: 100%;
+  overflow: auto;
+  width: 100%;
+}
+.checklist2, .checklist2 li { margin-left: 0; padding: 0; }
+.checklist2 label { display: block; padding-left: 25px; text-indent: -25px; }
+.checklist2 label:hover, .checklist2 label.hover { background: #777; color: #fff; }
+* html .checklist2 label { height: 1%; }
+
+.cl2 { margin-top: -3%;margin-left: -3%;font-size: 0.9em; width: 105.5%; height: 107%; }
+.cl2 input { vertical-align: middle; }
+.cl2 label:hover, .cl1 label.hover { background: #ddd; color: #000; }

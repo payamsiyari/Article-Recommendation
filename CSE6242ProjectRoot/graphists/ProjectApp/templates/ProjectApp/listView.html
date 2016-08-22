@@ -1,0 +1,137 @@
+<head>
+<meta charset="UTF-8">
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static "listViewStyle.css" %}">
+
+<script id="listViewScriptMain">
+	$("input.nodeCheck").click(function () {
+		var randomColor = getRandomColor()
+		var nodeID = this.getAttribute("id").split("_")[0]
+		var row = document.getElementById(nodeID+"_row")
+		var foundNode = null
+		var found = false
+		$.each(graph.nodes, function (i, v) {
+			if (v.id == nodeID) {
+				found = true
+				foundNode = v
+				return;
+			}
+		});
+		if (this.checked == true) {
+			row.setAttribute("color",randomColor)
+			$(row).css('background', randomColor);
+			if (found) {
+				var nodeSvg = document.getElementById(nodeID+"_svg")
+				d3.select(nodeSvg).select("path").style('fill',randomColor)
+			} else {
+				console.log('ERROR')
+			}
+		}else{
+			row.setAttribute("color","#ffffff")
+			$(row).css('background', "#ffffff");
+			if (found) {
+				var nodeSvg = document.getElementById(nodeID+"_svg")
+				d3.select(nodeSvg).select("path").style('fill',default_node_color)
+			} else {
+				console.log('ERROR')
+			}
+		}
+	})
+	$("button.citationButton").click(function () {
+//		document.getElementById("selectedPaper").innerHTML = document.getElementById(this.getAttribute("id").split("_")[0] + "_bib").innerHTML
+		document.getElementById("loading").style.visibility = 'visible'
+		var xhttp = new XMLHttpRequest();
+		var queryIDValue = this.getAttribute("id").split("_")[0]
+		var bibID = this.getAttribute("id").split("_")[0] + "_bib"
+		$.ajax({
+			type: "GET",
+			url: "/searchCitation",
+			data: {
+				queryID: queryIDValue,
+			},
+			success: function (newData) {
+//				alert('YES')
+				document.getElementById("loading").style.visibility = 'hidden'
+				document.getElementById("selectedPaper").innerHTML = document.getElementById(bibID).innerHTML
+				document.getElementById("citations").innerHTML = newData;
+				eval(document.getElementById("citationViewScriptMain").innerHTML);
+			}
+		})
+//					exit_highlight_citation_handle();
+//					$(this).css('background', '#a6d0ef');
+					var nodeID = this.getAttribute("id").split("_")[0]
+					var foundNode = null
+					var found = false
+					$.each(graph.nodes, function(i, v) {
+						if (v.id == nodeID) {
+							found = true
+							foundNode = v
+							return;
+						}
+					});
+					if(found){
+//					alert(nodeID);
+//					set_highlight_single(foundNode);
+						highlight_citation_function(foundNode)
+//					alert(highlight_node_function)
+					}else{
+						alert("Node " + nodeID + " not found.");
+					}
+//				set_highlight(d);
+//				alert(this.getAttribute("id").split("-")[0])
+	});
+	function getRandomColor() {
+		var letters = '0123456789ABCDEF'.split('');
+		var color = '#';
+		for (var i = 0; i < 6; i++ ) {
+			color += letters[Math.floor(Math.random() * 16)];
+		}
+		return color;
+	}
+$( document ).ready(function() {
+	var checks =
+	d3.selectAll("li.checkboxItem")
+			.on("mouseover", function(d) {
+				$(this).css('background', '#a6d0ef');
+				var nodeID = this.getAttribute("id").split("_")[0]
+				var foundNode = null
+				var found = false
+				$.each(graph.nodes, function(i, v) {
+					if (v.id == nodeID) {
+						found = true
+						foundNode = v
+						return;
+					}
+				});
+				if(found){
+//					alert(nodeID);
+//					set_highlight_single(foundNode);
+					highlight_node_function(foundNode)
+
+//					alert(highlight_node_function)
+				}else{
+//					alert("Node " + nodeID + " not found.");
+				}
+//				set_highlight(d);
+//				alert(this.getAttribute("id").split("-")[0])
+			})
+			.on("mouseout", function(d) {
+				$(this).css('background', this.getAttribute("color"));
+				exit_highlight_handle();
+			})
+});
+</script>
+</head>
+<body>
+	<ul class="checklist cl1" id="seedList" style="overflow:auto;">
+		{% for n in nodes_list %}
+			<li
+			class = "checkboxItem"
+			id ="{{n.0}}_row" color="#ffffff">
+				<input class = "nodeCheck" type="checkbox" id ="{{n.0}}_check" > <div id="{{n.0}}_bib" style="display: inline;"><b>"{{n.1}}"</b>, {{n.2}}, <i>{{n.3}}</i>, {{n.4}}. <a href="{{n.5}}" target="_blank">URL</a></div>
+				<button class="citationButton" id="{{n.0}}_showInBrowserButton" style="border:2px solid green;">Show in Citation Browser</button>
+				<hr>
+			</li>
+		{% endfor %}
+	</ul>
+</body>

@@ -1,0 +1,122 @@
+body
+{
+	background-color: white;
+}
+
+#wrapper
+{
+	width: 1280px;
+	height: 700px;
+	background-color: lightgray;
+}
+
+
+#interface
+{
+	float: left;
+	width: 370px;
+}
+
+#interface #interface_input
+{
+	height: 30px;
+	padding: 10px;
+	margin: 10px;
+}
+
+#interface #interface_params
+{
+	height: 170px;
+	background-color: white;
+	padding: 10px;
+	margin: 10px;
+	border-style: groove;
+}
+
+#interface #interface_search
+{
+	height: 295px;
+	background-color: white;
+	padding: 10px;
+	margin: 10px;
+	border-style: groove;
+}
+
+#output
+{
+	float: left;
+	width: 500px;
+}
+
+#output #output_graph
+{
+	height: 420px;
+	max-height: 370px;
+	background-color: white;
+	padding: 10px;
+	margin: 10px;
+	border-style: groove;
+	overflow: auto;
+}
+
+#output #output_algorithms
+{
+	height: 180px;
+	background-color: white;
+	padding: 10px;
+	margin: 10px;
+	border-style: groove;
+}
+
+#citationBrowser
+{
+	border:3px solid green;
+	float: left;
+	width: 400px;
+}
+
+#citationBrowser #selectedPaper
+{
+	height: 120px;
+	line-height: 150%;
+	max-height: 120px;
+	background-color: white;
+	padding: 10px;
+	margin: 10px;
+	border-style: groove;
+	overflow: auto;
+}
+
+#citationBrowser #citations
+{
+	height: 402px;
+	background-color: white;
+	padding: 10px;
+	margin: 10px;
+	border-style: groove;
+}
+
+@media screen and (max-width: 800px) {
+	#wrapper {
+		height: 1024px;
+		width: 320px;
+	}
+	#interface {
+		width: 320px;
+	}
+	#output {
+		width: 320px;
+	}
+}
+
+#loading
+{
+	visibility: hidden;
+	float: left;
+	padding-left: 28px;
+}
+#slider_range
+{
+	margin: 0 auto;
+	width: 100%;
+}
