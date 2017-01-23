@@ -1,6 +1,6 @@
 # Article-Recommendation
 Scholarly Article Recommendation for Newbies (GATech Course Project: CS6242, Spring 2016)
-
+![](GT-ArticleRecommendation.png)
 ## Installation & Usage
 * PREREQUISITES
 	* You will need the prerequisites below:
